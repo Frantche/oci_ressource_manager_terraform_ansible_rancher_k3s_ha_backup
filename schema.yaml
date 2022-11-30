@@ -1,0 +1,420 @@
+# Title shown in Application Information tab.
+title: Rancher set of variables
+# Sub Title shown in Application Information tab.
+description: Sample description...
+informationalText: Sample informational text to display in tab...
+schemaVersion: 1.1.0
+version: "29"
+
+locale: "en"
+
+variableGroups:
+  - title: "Destionation"
+    variables:
+      - compartment_ocid
+      - availability_domain
+      - tag_key
+      - tag_value
+      - region
+
+  - title: "Rancher settings"
+    variables:
+      - rancher_backup_enable
+      - rancher_is_first_install
+      - network_load_balancer_reserved_ips_id
+      - rancher_hostname
+      - email
+      - acme_server_name
+      - acme_server_url
+      - rancher_version
+      - k3s_token
+      - k3s_version
+      - ssh_username
+      - autorized_key
+      
+  - title: "Bastion Setting"
+    variables:
+      - bastion_bastion_type
+      - bastion_name
+      - bastion_client_cidr_block_allow_list
+
+  - title: "Network settings"
+    variables:
+      - oci_core_vcn_cidr
+      - oci_core_subnet_public
+      - oci_core_subnet_private
+  
+  - title: "server Instance Settings"
+    variables:
+      - server_shape_name
+      - server_shape_ocpu
+      - server_shape_memory
+      - server_pool_size
+      - server_os_image_id
+
+  - title: "agent Instance Settings"
+    variables:
+      - agent_shape_name
+      - agent_shape_ocpu
+      - agent_shape_memory
+      - agent_pool_size
+      - agent_os_image_id
+
+  - title: "rancher backup settings"
+    variables:
+      - rancher_backup_version
+      - rancher_backup_filename
+      - rancher_backup_bucket_name
+      - rancher_backup_folder
+      - rancher_backup_accessKey
+      - rancher_backup_secretKey
+      - rancher_backup_region
+      - rancher_backup_endpoint
+      - rancher_backup_endpointCA
+      - rancher_backup_encryption_config_secretbox
+      - rancher_backup_schedule
+      - rancher_backup_retentioncount
+    visible: rancher_backup_enable
+
+variables:
+  compartment_ocid:
+    type: oci:identity:compartment:id
+    required: true
+    title: Compartment OCID
+  
+  availability_domain:
+    type: oci:identity:availabilitydomain:name
+    required: true
+    title: Availability Domain
+    dependsOn:
+      compartmentId: compartment_ocid
+  
+  region:
+    type: string
+    required: true
+    title: OCI region 
+
+  tag_key:
+    type: string
+    required: true
+    title: Tag key 
+
+  tag_value:
+    type: string
+    required: true
+    title: Tag value
+
+  oci_core_vcn_cidr:
+    type: string
+    required: true
+    title: Virtual network CIDR block
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+
+  oci_core_subnet_public:
+    type: string
+    required: true
+    title: Public subnet CIDR block
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+
+  oci_core_subnet_private:
+    type: string
+    required: true
+    title: Private subnet CIDR block
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+
+  network_load_balancer_reserved_ips_id:
+    type: string
+    required: true
+    title: Oracle reserved public IP.
+    pattern: "^ocid1.publicip.*$"
+
+  server_shape_name:
+    type: oci:core:instanceshape:name
+    required: true
+    default: VM.Standard.A1.Flex
+    title: Instance shape
+    dependsOn:
+      compartmentId: compartment_ocid
+      availabilityDomain: availability_domain
+
+  server_shape_ocpu:
+    type: number
+    default: 1
+    title: Number of CPUs
+    multipleOf: 1
+    minimun: 1
+    visible:
+      or:
+        - eq: 
+          - server_shape_name
+          - "VM.Optimized3.Flex"
+        - eq: 
+          - server_shape_name
+          - "VM.Standard.A1.Flex"
+        - eq: 
+          - server_shape_name
+          - "VM.Standard.E3.Flex"
+        - eq: 
+          - server_shape_name
+          - "VM.Standard.E4.Flex"
+        - eq: 
+          - server_shape_name
+          - "VM.Standard3.Flex"
+        
+  server_shape_memory:
+    type: number
+    default: 6
+    title: Memory in Gb
+    multipleOf: 1
+    minimun: 1
+    visible:
+      or:
+        - eq: 
+          - server_shape_name
+          - "VM.Optimized3.Flex"
+        - eq: 
+          - server_shape_name
+          - "VM.Standard.A1.Flex"
+        - eq: 
+          - server_shape_name
+          - "VM.Standard.E3.Flex"
+        - eq: 
+          - server_shape_name
+          - "VM.Standard.E4.Flex"
+        - eq: 
+          - server_shape_name
+          - "VM.Standard3.Flex"
+  
+  server_pool_size:
+    type: number
+    default: 1
+    title: Number of VM in the pool
+    multipleOf: 1
+    minimun: 1
+
+  server_os_image_id:
+    type: oci:core:image:id
+    required: true
+    title: OS Image
+    dependsOn:
+      compartmentId: compartment_ocid
+      operatingSystem: "Oracle Linux"
+      shape: server_shape_name
+
+  agent_shape_name:
+    type: oci:core:instanceshape:name
+    required: true
+    default: VM.Standard.A1.Flex
+    title: Instance shape
+    dependsOn:
+      compartmentId: compartment_ocid
+      availabilityDomain: availability_domain
+
+  agent_shape_ocpu:
+    type: number
+    default: 1
+    title: Number of CPUs
+    multipleOf: 1
+    minimun: 1
+    visible:
+      or:
+        - eq: 
+          - agent_shape_name
+          - "VM.Optimized3.Flex"
+        - eq: 
+          - agent_shape_name
+          - "VM.Standard.A1.Flex"
+        - eq: 
+          - agent_shape_name
+          - "VM.Standard.E3.Flex"
+        - eq: 
+          - agent_shape_name
+          - "VM.Standard.E4.Flex"
+        - eq: 
+          - agent_shape_name
+          - "VM.Standard3.Flex"
+        
+  agent_shape_memory:
+    type: number
+    default: 6
+    title: Memory in Gb
+    multipleOf: 1
+    minimun: 1
+    visible:
+      or:
+        - eq: 
+          - agent_shape_name
+          - "VM.Optimized3.Flex"
+        - eq: 
+          - agent_shape_name
+          - "VM.Standard.A1.Flex"
+        - eq: 
+          - agent_shape_name
+          - "VM.Standard.E3.Flex"
+        - eq: 
+          - agent_shape_name
+          - "VM.Standard.E4.Flex"
+        - eq: 
+          - agent_shape_name
+          - "VM.Standard3.Flex"
+  
+  agent_pool_size:
+    type: number
+    default: 3
+    title: Number of agent node
+    multipleOf: 1
+    minimun: 1
+
+  agent_os_image_id:
+    type: oci:core:image:id
+    required: true
+    title: OS Image
+    dependsOn:
+      compartmentId: compartment_ocid
+      operatingSystem: "Oracle Linux"
+      shape: agent_shape_name
+
+  bastion_bastion_type:
+    type: string
+    required: true
+    title: Bastion type
+
+  bastion_name:
+    type: string
+    required: true
+    title: Bastion name
+
+  bastion_client_cidr_block_allow_list:
+    required: true
+    title: Allowed IP CIDR block
+    type: array
+    items:
+      type: string
+      pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    minItems: 1
+    uniqueItems: true
+    default: [ "0.0.0.0/0" ]
+  
+  k3s_token:
+    type: string
+    required: true
+    title: K3S token
+  
+  rancher_hostname:
+    type: string
+    required: true
+    title: Rancher hostname
+  
+  email:
+    type: string
+    required: true
+    title: email
+  
+  acme_server_name:
+    type: string
+    required: true
+    title: ACME name
+  
+  acme_server_url:
+    type: string
+    required: true
+    title: ACME server url
+  
+  rancher_is_first_install:
+    type: boolean
+    required: true
+    title: Is it rancher first installation ?
+  
+  rancher_version:
+    type: string
+    required: true
+    title: Rancher helm chart version
+  
+  autorized_key:
+    type: oci:core:ssh:publickey
+    required: true
+    title: Autorized SSH key to access VM via an Bastion session
+    sensitive: true
+
+  ssh_username:
+    type: string
+    required: false
+    title: "SSH username"
+    description: "ssh username"
+    default: "k3sadm"
+
+  k3s_version:
+    type: string
+    required: false
+    title: "k3s version"
+    description: "k3s version"
+    default: "latest"
+
+  rancher_backup_enable:
+    type: boolean
+    required: true
+    title: Activate rancher backup
+
+  rancher_backup_version:
+    type: string
+    required: true
+    title: Rancher Backup helm chart version
+  
+  rancher_backup_filename:
+    type: string
+    required: false
+    title: Name of file to backup application
+
+  rancher_backup_bucket_name:
+    type: string
+    required: true
+    title: S3 storage Bucket name
+  
+  rancher_backup_folder:
+    type: string
+    required: false
+    title: S3 storage folder name
+  
+  rancher_backup_accessKey:
+    type: string
+    required: true
+    title: S3 AccessKey
+    sensitive: true
+
+  rancher_backup_secretKey:
+    type: string
+    required: true
+    title: S3 SecretKey
+    sensitive: true
+
+  rancher_backup_region:
+    type: string
+    required: false
+    title: S3 region
+  
+  rancher_backup_endpoint:
+    type: string
+    required: true
+    title: S3 endpoint
+  
+  rancher_backup_endpointCA:
+    type: string
+    required: false
+    title: S3 endpoint certificate
+  
+  rancher_backup_encryption_config_secretbox:
+    type: string
+    required: false
+    title: Encryption secretbox secret
+    sensitive: true
+
+  rancher_backup_schedule:
+    type: string
+    required: true
+    title: Backup schedule
+  
+  rancher_backup_retentioncount:
+    type: string
+    required: true
+    title: Backup retention count
+  

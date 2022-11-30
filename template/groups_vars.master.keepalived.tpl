@@ -1,0 +1,1 @@
+keepalived_shared_ip: ${loadbalancer_master_ip}

@@ -1,0 +1,31 @@
+collections:
+- name: community.general
+  version: 5.7.0
+- name: ansible.posix
+  version: 1.4.0
+- name: kubernetes.core
+  version: 2.3.2
+- name: git+https://github.com/Frantche/ansible_collection_helm_wrapper.git,main
+- name: git+https://github.com/Frantche/ansible_collection_k3s.git,master
+
+roles:
+  - name: frantchenco.ansible_role_helm_nginx_ingress
+    type: git
+    src: https://github.com/Frantche/ansible_role_helm_nginx.git
+    version: main
+  - name: frantchenco.ansible_role_helm_cert_manager
+    type: git
+    src: https://github.com/Frantche/ansible_role_helm_cert_manager.git
+    version: master
+  - name: frantchenco.ansible_role_helm_descheduler
+    type: git
+    src: https://github.com/Frantche/ansible_role_helm_descheduler.git
+    version: master
+  - name: frantchenco.ansible_role_helm_rancher
+    type: git
+    src: https://github.com/Frantche/ansible_role_helm_rancher.git
+    version: master
+  - name: frantchenco.ansible_role_helm_rancher_backup
+    type: git
+    src: https://github.com/Frantche/ansible_role_helm_rancher_backup.git
+    version: master
