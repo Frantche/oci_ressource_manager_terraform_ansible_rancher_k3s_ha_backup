@@ -13,7 +13,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
-      - name: Create Release from tag
-        uses: technote-space/release-github-actions@v6
-          
+
+      - name: Archive Release
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          filename: 'release.zip'
+          exclusions: '*.git* /*node_modules/* .editorconfig'
+      
+      - name: Upload Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "release.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
