@@ -24,7 +24,7 @@ Within [oracle cloud infrastructure always free services limits](https://www.ora
 
 ## Do you want to try it now ?
 
-[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/Frantche/oci_ressource_manager_terraform_ansible_rancher_k3s_ha_backup/archive/refs/tags/v1.zip)
+[![Deploy to Oracle Cloud](https://oci-resourcemanager-plugin.plugins.oci.oraclecloud.com/latest/deploy-to-oracle-cloud.svg)](https://cloud.oracle.com/resourcemanager/stacks/create?zipUrl=https://github.com/Frantche/oci_ressource_manager_terraform_ansible_rancher_k3s_ha_backup/releases/latest/download/release.zip)
 
 The default settings use the maximum limits provided by the always free services, customize them to fit your needs.
 
