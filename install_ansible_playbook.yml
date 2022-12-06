@@ -13,6 +13,12 @@
     - role: frantchenco.k3s.haproxy
     - role: frantchenco.k3s.keepalived
 
+- hosts: master
+  serial: 1
+  become: yes
+  roles:
+    - role: frantchenco.k3s.master
+
 - hosts: master[0]
   become: no
   strategy: debug
@@ -23,7 +29,6 @@
   serial: 1
   become: yes
   roles:
-    - role: frantchenco.k3s.master
     - role: frantchenco.k3s.delete_node_systemd_master
 
 - hosts: agent
@@ -38,7 +43,6 @@
   become: yes
   roles:
    - role: frantchenco.helm_wrapper.helm_prereq
-
 
 - hosts: master[0]
   serial: 1

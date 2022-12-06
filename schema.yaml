@@ -1,8 +1,8 @@
 # Title shown in Application Information tab.
-title: Rancher set of variables
+title: Rancher
 # Sub Title shown in Application Information tab.
-description: Sample description...
-informationalText: Sample informational text to display in tab...
+description: Deploy an k3s cluster and install rancher
+informationalText: Deploy an k3s cluster and install rancher
 schemaVersion: 1.1.0
 version: "29"
 
@@ -200,6 +200,7 @@ variables:
       compartmentId: compartment_ocid
       operatingSystem: "Oracle Linux"
       shape: server_shape_name
+      operatingSystemVersion: "9"
 
   agent_shape_name:
     type: oci:core:instanceshape:name
@@ -273,6 +274,7 @@ variables:
       compartmentId: compartment_ocid
       operatingSystem: "Oracle Linux"
       shape: agent_shape_name
+      operatingSystemVersion: "9"
 
   bastion_bastion_type:
     type: string
