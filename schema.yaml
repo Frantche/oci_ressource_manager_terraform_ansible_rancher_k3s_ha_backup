@@ -329,6 +329,7 @@ variables:
     type: string
     required: true
     title: Rancher helm chart version
+    default: "v2.7.0"
   
   autorized_key:
     type: oci:core:ssh:publickey
@@ -341,14 +342,14 @@ variables:
     required: false
     title: "SSH username"
     description: "ssh username"
-    default: "k3sadm"
+    default: "opc"
 
   k3s_version:
     type: string
     required: false
     title: "k3s version"
     description: "k3s version"
-    default: "latest"
+    default: "v1.24.8+k3s1"
 
   rancher_backup_enable:
     type: boolean
@@ -359,6 +360,7 @@ variables:
     type: string
     required: true
     title: Rancher Backup helm chart version
+    default: "v3.0.0"
   
   rancher_backup_filename:
     type: string

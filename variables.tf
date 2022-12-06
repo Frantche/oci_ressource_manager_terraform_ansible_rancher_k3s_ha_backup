@@ -61,7 +61,7 @@ variable "autorized_key" {
 }
 
 variable "ssh_username" {
-  default     = ""
+  default     = "opc"
   type        = string
   description = "define username  will be allowed to connect to instance"
 }
@@ -182,7 +182,7 @@ variable "rancher_is_first_install" {
 }
 
 variable "rancher_version" {
-  default     = "latest"
+  default     = "v2.7.0"
   type        = string
   description = "The version of the rancher helm chart you want to install"
 }
@@ -194,7 +194,7 @@ variable "rancher_backup_enable" {
 }
 
 variable "rancher_backup_version" {
-  default     = "latest"
+  default     = "v3.0.0"
   type        = string
   description = "The version of the rancher backup helm chart you want to install"
 }
