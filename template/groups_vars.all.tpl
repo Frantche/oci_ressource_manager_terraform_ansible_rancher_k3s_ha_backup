@@ -28,7 +28,12 @@ helm_rancher_backup_chart_version: "${rancher_backup_version}"
 
 helm_rancher_values:
   hostname: "{{ rancher_hostname }}"
-  ingress.tls.source: letsEncrypt
-  letsEncrypt.ingress.class: nginx
-  letsEncrypt.email: "{{ acme_issue_email }} "
+  ingress
+    tls
+      source: letsEncrypt
+  letsEncrypt
+    ingress
+      class: nginx
+  letsEncrypt
+    email: "{{ acme_issue_email }} "
   replicas: "{{ groups['agent'] | length }}"
