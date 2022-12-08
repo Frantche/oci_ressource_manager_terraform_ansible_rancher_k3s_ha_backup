@@ -37,3 +37,4 @@ helm_rancher_values:
   letsEncrypt:
     email: "{{ acme_issue_email }} "
   replicas: "{{ groups['agent'] | length }}"
+  
