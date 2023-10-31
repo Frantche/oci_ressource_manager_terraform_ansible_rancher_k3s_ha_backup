@@ -23,7 +23,7 @@ resource "oci_network_load_balancer_network_load_balancer" "agent_k3s_load_balan
 
 resource "oci_network_load_balancer_listener" "k3s_http_listener" {
   default_backend_set_name = oci_network_load_balancer_backend_set.k3s_http_backend_set.name
-  name                     = "k3s http listener"
+  name                     = "k3s_http_listener"
   network_load_balancer_id = oci_network_load_balancer_network_load_balancer.agent_k3s_load_balancer.id
   port                     = 80
   protocol                 = "TCP_AND_UDP"
@@ -37,7 +37,7 @@ resource "oci_network_load_balancer_backend_set" "k3s_http_backend_set" {
     url_path    = "/"
   }
 
-  name                     = "k3s http backend"
+  name                     = "k3s_http_backend"
   network_load_balancer_id = oci_network_load_balancer_network_load_balancer.agent_k3s_load_balancer.id
   policy                   = "FIVE_TUPLE"
   is_preserve_source       = true
@@ -71,7 +71,7 @@ resource "oci_network_load_balancer_listener" "k3s_https_listener" {
   ]
 
   default_backend_set_name = oci_network_load_balancer_backend_set.k3s_https_backend_set.name
-  name                     = "k3s https listener"
+  name                     = "k3s_https_listener"
   network_load_balancer_id = oci_network_load_balancer_network_load_balancer.agent_k3s_load_balancer.id
   port                     = 443
   protocol                 = "TCP_AND_UDP"
@@ -110,7 +110,7 @@ resource "oci_network_load_balancer_backend_set" "k3s_https_backend_set" {
 
   }
 
-  name                     = "k3s https backend"
+  name                     = "k3s_https_backend"
   network_load_balancer_id = oci_network_load_balancer_network_load_balancer.agent_k3s_load_balancer.id
   policy                   = "FIVE_TUPLE"
   is_preserve_source       = true
